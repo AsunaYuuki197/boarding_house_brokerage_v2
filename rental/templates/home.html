@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+<section class="home" id="home">
+    <div class="home-text container">
+        <h2 class="home-title slide-in-bottom">College Rooming House</h2>
+        <span class="home-subtitle fade-in">AN TOÀN - UY TÍN - CHẤT LƯỢNG
+        </span>
+    </div>
+</section>
+
+<section>
+    <h2 class="text-center container">All Posts</h2><br>
+
+    <div class="container">
+        <div class="post post-list">
+            {% for house, image in houses %}
+            <div class="post-box {{ post.status }}">
+                <div class="post-img-list">
+                    <img src="{{ image.image.url }}" alt="House image" class="post-img">
+                </div>
+                <span class="post-title"><a href="{% url 'house_detail' house.pk %}">{{ house.name }}</a></span>
+                <h2 class="category">Reputation Score: {{ house.reputation_score }}</p>
+                <h2 class="category">Address: {{ house.address }}</h2>
+                <h2 class="category">Price: {{ house.price|intcomma }} VND/Month</h2>
+                <p class="post-description">{{ house.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+

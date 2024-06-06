@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+
+</section>
+<section>
+    <div class="container">
+        <h2 class="mb-4 text-center">Create a Rental Post</h1>
+        <div class="post-box">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <h4>House Information</h4>
+                    {{ house_form.as_p }}
+                    <h4>Rental Post Information</h4>
+                    {{ rental_post_form.as_p }}
+                </div>
+                <div class="form-group">
+                    <h4>House Images</h4>
+                    <input type="file" name="images" class="form-control-file" multiple>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Post</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

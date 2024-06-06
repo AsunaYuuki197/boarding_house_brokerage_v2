@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    
+</section>
+<section>
+    <div class="container text-center">
+        <h2 class="mb-4">Manage Reservations for Your Rental Posts</h2>
+        <table class="table align-middle mb-0 bg-white post-box table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>User</th>
+                    <th>House</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Is Paid</th>
+                    <th>Refund Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.user.username }}</td>
+                    <td>{{ reservation.rental_post.house.name }}</td>
+                    <td>{{ reservation.start_date }}</td>
+                    <td>{{ reservation.end_date }}</td>
+                    <td>{{ reservation.is_paid }}</td>
+                    <td>{{ reservation.get_refund_status_display }}</td>
+                    <td>
+                        {% if reservation.refund_status == 'requested' %}
+                            <a href="{% url 'process_refund' reservation.pk %}" class="btn btn-success btn-sm">Process Refund</a>
+                        {% endif %}
+                        <a href="{% url 'user_delete_reservation' reservation.pk %}" class="btn btn-danger btn-sm">Abort</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boarding House Brokerage</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/animation.css' %}">
+    <link rel="stylesheet" href="{% static 'css/candles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'css/submit.css' %}"> -->
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <header class="text-center shadow">
+        <div class="nav container">
+            <div class="links-container">
+                <!-- <ul> -->
+                    <a class="logo"><img src="/media/logo.jpg"></a>
+                    <li class="nav-item"><a class="nav-link link" href="{% url 'home' %}">Home</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link link" href="{% url 'create_rental_post' %}">Post a Rental</a></li>
+                        <li class="nav-item"><a class="nav-link link" href="{% url 'manage_user_posts' %}">My Posts</a></li>
+                        <li class="nav-item"><a class="nav-link link" href="{% url 'manage_user_reviews' %}">My Reviews</a></li>
+                        <li class="nav-item"><a class="nav-link link" href="{% url 'manage_user_reservations' %}">My Reservations</a></li>
+                        <li class="nav-item"><a class="nav-link link" href="{% url 'manage_user_rental_reservations' %}">Reservations for My Posts</a></li>
+                        {% if user.is_staff %}
+                            <li class="nav-item"><a class="nav-link link" href="{% url 'manage_posts' %}">Manage Posts</a></li>
+                            <li class="nav-item"><a class="nav-link link" href="{% url 'manage_reviews' %}">Manage Reviews</a></li>
+                            <li class="nav-item"><a class="nav-link link" href="{% url 'manage_reservations' %}">Manage Reservations</a></li>
+                        {% endif %}
+                        <li class="nav-item"><a class="nav-link link" href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link link" href="{% url 'register' %}">Register</a></li>
+                        <li class="nav-item"><a class="nav-link link" href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                    <li class="nav-item"><a class="nav-link link" href="{% url 'customer_care' %}">Customer Care</a></li>
+            </div>
+        </div>
+    </header>
+
+
+    <main class="mt-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <div class="footer container">
+        <p>&#169 CollRoom, 2024</p>
+        <div class="social">
+            <a href="#"><i class='bx bxl-facebook'></i></a>
+            <a href="#"><i class='bx bxl-twitter'></i></a>
+            <a href="#"><i class='bx bxl-instagram'></i></a>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>

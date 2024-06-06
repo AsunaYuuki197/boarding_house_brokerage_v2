@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+<section class="post-header">
+    <div class="container header-content">
+        <a href="{% url 'home' %}" class="back-home">Back to Home</a>
+        <h2 class="header-title">{{ house.name }}</h2>
+        <img src="{{ images.0.image.url }}" alt="{{ house.name }}" class="img-fluid img-thumbnail header-img">
+    </div>
+</section>
+
+<section class="container post-content">
+    <div class="post-container">
+        <!-- <div class="card-header bg-gradient-primary text-white">
+            <h2 style="color: rgb(129, 179, 239);">{{ house.name }}</h2>
+        </div> -->
+        <div class="post-text">
+            <h2 class="sub-heading text-center">Details</h3>
+            {{ house.values }}
+            <p>{{ house.description }}</p>
+            <p><strong>Address:</strong> {{ house.address }}</p>
+            <p><strong>Reputation Score:</strong> {{ average_rating }}</p>
+            <p><strong>Price:</strong> {{ house.price|intcomma }} VND</p>
+            <p><strong>Vacancies:</strong> {{ post.available_vacancies }} / {{ post.total_vacancies }}</p>
+        </div>
+
+        <div class="post-text">
+
+            <h2 class="sub-heading text-center">Images</h3>
+            <div class="post-img-list">
+                {% for image in images %}
+                    {% if forloop.counter == 1 %}
+                    {% else %}
+                    <div>
+                        <img src="{{ image.image.url }}" alt="House image" class="post-img img-thumbnail img-fluid">
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            {% if user.is_authenticated and post.available_vacancies > 0 %}
+                <h2 class="sub-heading text-center mt-4">Reserve This House</h3>
+                <form method="post" action="{% url 'reserve_house' post.pk %}">
+                    {% csrf_token %}
+                    <div class="form-group text-center">
+                        {{ reservation_form.as_p }}
+                        <button type="submit" class="btn btn-primary mt-2">Reserve</button>
+                    </div>
+                </form>
+            {% else %}
+                <p class="text-danger mt-2 text-center">No vacancies available for this house.</p>
+            {% endif %}
+
+        </div>
+
+        <div class="card mb-4 post-text">
+            <div class="card-header bg-gradient-primary">
+                <h3 class="sub-heading text-center">Reviews</h3>
+            </div>
+            <div class="post-box card-body">
+                <ul class="list-group">
+                    {% for review in reviews %}
+                        <li class="list-group-item">
+                            <p><strong>Rating:</strong> {{ review.rating }}</p>
+                            <p>{{ review.comment }}</p>
+                            <p><strong>By:</strong> {{ review.user.username }} on {{ review.created_at }}</p>
+                            <h6>Replies:</h6>
+                            <ul class="list-group">
+                                {% for reply in review.reviewreply_set.all %}
+                                    <li class="list-group-item">
+                                        <p>{{ reply.comment }}</p>
+                                        <p><strong>By:</strong> {{ reply.user.username }} on {{ reply.created_at }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <a href="{% url 'reply_review' review.pk %}" class="btn btn-secondary btn-sm mt-2">Reply</a>
+                        </li>
+                        <br>
+                    {% endfor %}
+                </ul>
+                {% if user.is_authenticated %}
+                    <h3 class="sub-heading mt-4">Submit a Review</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ review_form.as_p }}
+                            <button type="submit" class="btn btn-primary mt-2">Submit Review</button>
+                        </div>
+                    </form>
+                {% else %}
+                    <p>Please <a href="{% url 'login' %}">login</a> to submit a review.</p>
+                {% endif %}
+            </div>
+        </div>
+    
+    </div>
+    
+
+</section>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    
+</section>
+<section>
+    <div class="container text-center">
+        <h2 class="mb-4">Manage Your Posts</h2>
+        <table class="table align-middle mb-0 bg-white post-box table-hover">
+            <tr class="thead-dark">
+                <th>Title</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            {% for post in posts %}
+            <tr>
+                <td>{{ post.title }}</td>
+                <td>{{ post.is_verified }}</td>
+                <td>
+                    <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</section>
+
+{% endblock %}

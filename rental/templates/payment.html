@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+<section>
+    
+</section>
+<section>
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow" style="border-radius: 1rem;">
+                    <div class="card-body p-5">
+                        <h2 class="mb-4 text-center">Payment</h2>
+                        <table class="table">
+                            <tr>
+                                <td><p><strong>Reservation for:</strong></p></td>
+                                <td class="text-right"> <p>{{ reservation.rental_post.title }}</p></td>
+                            </tr>
+                            <tr>
+                                <td><p><strong>House Price:</strong></p></td>
+                                <td class="text-right"><p>{{ house_price|intcomma }} VND</p></td>
+                            </tr>
+                            <tr>
+                                <td><p><strong>Service Fee (2%):</strong></p></td>
+                                <td class="text-right"><p>{{ service_fee|intcomma }} VND</p></td>
+                            </tr>
+                            <tr>
+                                <td><p><strong>Total Amount:</strong></p></td>
+                                <td class="text-right"><p>{{ total_amount|intcomma }} VND</p></td>
+                            </tr>
+                        </table>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group mb-4">
+                                {{ payment_form.as_p }}       
+                            </div>
+                            <button type="submit" class="form-control btn btn-primary">Pay</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
